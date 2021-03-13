@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import authApi from '@/api/auth'
+import {setItem} from '@/helpers/persistanceStorage'
 
 const state = {
 	isSubmitting: false,
@@ -32,6 +33,7 @@ const actions = {
 				.register(credentials)
 				.then(response => {
 					context.commit('registerSuccess', response.data.user)
+					setItem('accessToken', response.data.user.token)
 					resolve(response.data.user)
 				})
 				.catch(result => {
