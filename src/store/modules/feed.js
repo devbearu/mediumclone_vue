@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import feedApi from '@/api/feed'
 
 const state = {
@@ -9,7 +8,7 @@ const state = {
 
 export const mutationTypes = {
 	getFeedStart: '[feed] Get feed start',
-	getFeedSuccess: '[feed] Get feed succses',
+	getFeedSuccess: '[feed] Get feed success',
 	getFeedFailure: '[feed] Get feed failure'
 }
 
@@ -34,14 +33,16 @@ const mutations = {
 const actions = {
 	[actionTypes.getFeed](context, {apiUrl}) {
 		return new Promise(resolve => {
-			context.commit(mutationTypes.getFeedStart)
+			context.commit(mutationTypes.getFeedStart, apiUrl)
 			feedApi
 				.getFeed(apiUrl)
 				.then(response => {
 					context.commit(mutationTypes.getFeedSuccess, response.data)
 					resolve(response.data)
 				})
-				.catch(() => context.commit(mutationTypes.getFeedFailure))
+				.catch(() => {
+					context.commit(mutationTypes.getFeedFailure)
+				})
 		})
 	}
 }
