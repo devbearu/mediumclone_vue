@@ -1,6 +1,5 @@
 import axios from '@/api/axios'
 
-// eslint-disable-next-line no-unused-vars
 const register = credentials => {
 	return axios.post('/users', {user: credentials})
 }
@@ -13,8 +12,15 @@ const getCurrentUser = () => {
 	return axios.get('/user')
 }
 
+const updateCurrentUser = currentUserInput => {
+	return axios
+		.put('/user', {user: currentUserInput})
+		.then(response => response.data.user)
+}
+
 export default {
 	register,
 	login,
-	getCurrentUser
+	getCurrentUser,
+	updateCurrentUser
 }
